@@ -16,9 +16,10 @@ func shaCoroutines(n, shaRounds int) {
 		go func() {
 			defer wg.Done()
 
+			buf := make([]byte, _bufSize)
+			rand.Read(buf)
+
 			for i := 0; i < shaRounds; i++ {
-				buf := make([]byte, _bufSize)
-				rand.Read(buf)
 				sha256.Sum256(buf)
 			}
 		}()
@@ -34,9 +35,10 @@ func shaThreads(n, shaRounds int) {
 			runtime.LockOSThread()
 			defer wg.Done()
 
+			buf := make([]byte, _bufSize)
+			rand.Read(buf)
+
 			for i := 0; i < shaRounds; i++ {
-				buf := make([]byte, _bufSize)
-				rand.Read(buf)
 				sha256.Sum256(buf)
 			}
 		}()

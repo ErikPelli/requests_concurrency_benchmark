@@ -8,7 +8,7 @@ import (
 func BenchmarkShaCoroutines(b *testing.B) {
 	const n = 32
 	for i := 0; i < b.N; i++ {
-		shaCoroutines(n, 100)
+		shaCoroutines(n, 1000000)
 	}
 }
 
@@ -18,6 +18,6 @@ func BenchmarkShaThreads(b *testing.B) {
 	b.ResetTimer()
 
 	for i := 0; i < b.N; i++ {
-		shaThreads(n, 100)
+		shaThreads(n, 1000000)
 	}
 }
