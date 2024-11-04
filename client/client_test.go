@@ -2,6 +2,7 @@ package client
 
 import (
 	common "github.com/ErikPelli/requests_concurrency_benchmark"
+	"runtime"
 	"testing"
 )
 
@@ -25,6 +26,9 @@ func benchmarkEchoRequest(b *testing.B, numClients int, isCoroutine bool) {
 	if isCoroutine {
 		finalClient = newCoroutineClient(clientFactory, numClients)
 	} else {
+		// Allow Go to create enough OS threads to handle all the
+		// concurrent HTTP requests (+ main goroutine)
+		runtime.GOMAXPROCS(numClients + 1)
 		finalClient = newThreadClient(clientFactory, numClients)
 	}
 
